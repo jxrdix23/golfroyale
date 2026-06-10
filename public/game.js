@@ -37,6 +37,7 @@
   const players = new Map();   // jugadores remotos
 
   const ball = { x: 0, y: 0, vx: 0, vy: 0, moving: false, sinking: 0 };
+  let myEmote = null, myEmoteT = 0;
   let lastShotPos = { x: 0, y: 0 };
   let aiming = false, aimX = 0, aimY = 0;
   const particles = [];
@@ -525,8 +526,13 @@
     socket.on('chat', (m) => addChat(m.name, m.text, m.color));
     socket.on('emote', (d) => {
       sfx.emote();
+      if (d.id === myId) {
+        myEmote = d.emote; myEmoteT = 1.6;
+        addChat(myName, d.emote, myColor);
+        return;
+      }
       const p = players.get(d.id);
-      if (p) { p.emote = d.emote; p.emoteT = 1.6; }
+      if (p) { p.emote = d.emote; p.emoteT = 1.6; addChat(p.name, d.emote, p.color); }
     });
   }
 
@@ -779,6 +785,13 @@
       ctx.globalAlpha = 1;
     } else if (!mySunk) {
       drawBall(ball.x, ball.y, myColor, 1, null);
+      if (myEmote && myEmoteT > 0) {
+        myEmoteT -= dt;
+        ctx.font = '22px serif'; ctx.textAlign = 'center';
+        ctx.globalAlpha = Math.min(1, myEmoteT * 2);
+        ctx.fillText(myEmote, ball.x, ball.y - 24 - (1.6 - myEmoteT) * 14);
+        ctx.globalAlpha = 1;
+      }
     }
 
     // apuntado
