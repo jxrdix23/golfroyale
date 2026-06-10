@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⛳ GolfRoyale — Minigolf multijugador online</title>
+  <meta name="description" content="Minigolf multijugador online: 12 hoyos, salas con amigos, chat y marcador en tiempo real." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>⛳</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOBBY -->
+  <div id="lobby" class="overlay">
+    <div class="lobby-card">
+      <h1>⛳ Golf<span>Royale</span></h1>
+      <p class="tagline">Minigolf multijugador · 12 hoyos · tiempo real</p>
+      <input id="nameInput" type="text" maxlength="16" placeholder="Tu nombre" autocomplete="off" />
+      <input id="roomInput" type="text" maxlength="8" placeholder="Código de sala (vacío = pública)" autocomplete="off" />
+      <button id="playBtn">JUGAR</button>
+      <p class="hint">Comparte el código de sala con tus amigos para jugar juntos.<br/>Arrastra desde la bola para apuntar y suelta para golpear.</p>
+      <p id="lobbyError" class="error"></p>
+    </div>
+  </div>
+
+  <!-- JUEGO -->
+  <div id="game" class="hidden">
+    <div id="topbar">
+      <div id="holeInfo">Hoyo 1 · Par 2</div>
+      <div id="strokeInfo">Golpes: 0</div>
+      <div id="roomInfo" title="Clic para copiar enlace de invitación">🔗 Sala: LOBBY</div>
+    </div>
+    <div id="main">
+      <div id="canvasWrap">
+        <canvas id="canvas" width="960" height="600"></canvas>
+        <div id="holeBanner" class="hidden"></div>
+      </div>
+      <div id="sidebar">
+        <div id="scoreboard">
+          <h3>🏆 Marcador</h3>
+          <div id="scoreList"></div>
+        </div>
+        <div id="chatbox">
+          <div id="chatLog"></div>
+          <div id="emotes">
+            <button class="emote">😂</button><button class="emote">🔥</button>
+            <button class="emote">😭</button><button class="emote">🎉</button>
+            <button class="emote">😡</button><button class="emote">👏</button>
+            <button class="emote">🍀</button><button class="emote">💀</button>
+          </div>
+          <form id="chatForm" autocomplete="off">
+            <input id="chatInput" type="text" maxlength="140" placeholder="Escribe un mensaje…" />
+            <button type="submit">▶</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div id="finalScreen" class="overlay hidden">
+    <div class="lobby-card">
+      <h1>🏁 ¡Partida terminada!</h1>
+      <div id="finalRanking"></div>
+      <button onclick="location.reload()">JUGAR OTRA VEZ</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="courses.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

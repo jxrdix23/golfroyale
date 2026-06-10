@@ -1,0 +1,176 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d1b12;
+  --panel: #14241a;
+  --panel2: #1b3023;
+  --accent: #4cd964;
+  --text: #e8f5e9;
+  --muted: #88a690;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- LOBBY / OVERLAYS ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at 30% 20%, #1d4028 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, #143820 0%, transparent 60%),
+    var(--bg);
+}
+
+.lobby-card {
+  background: var(--panel);
+  border: 1px solid #2c4a36;
+  border-radius: 18px;
+  padding: 38px 44px;
+  width: min(420px, 92vw);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+.lobby-card h1 {
+  font-size: 2.4rem; letter-spacing: 1px; margin-bottom: 6px;
+}
+.lobby-card h1 span { color: var(--accent); }
+.tagline { color: var(--muted); margin-bottom: 24px; font-size: .95rem; }
+
+.lobby-card input {
+  width: 100%; padding: 13px 16px; margin-bottom: 12px;
+  border-radius: 10px; border: 1px solid #2c4a36;
+  background: var(--panel2); color: var(--text);
+  font-size: 1rem; outline: none; transition: border .2s;
+}
+.lobby-card input:focus { border-color: var(--accent); }
+
+.lobby-card button {
+  width: 100%; padding: 14px; margin-top: 4px;
+  border: none; border-radius: 10px; cursor: pointer;
+  background: linear-gradient(135deg, #4cd964, #2eaa4a);
+  color: #08230f; font-size: 1.15rem; font-weight: 800; letter-spacing: 2px;
+  transition: transform .1s, box-shadow .2s;
+}
+.lobby-card button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(76,217,100,.35); }
+
+.hint { color: var(--muted); font-size: .8rem; margin-top: 18px; line-height: 1.5; }
+.error { color: #ff6b6b; margin-top: 10px; font-size: .9rem; min-height: 1.2em; }
+
+/* ---------- JUEGO ---------- */
+#game { height: 100vh; display: flex; flex-direction: column; }
+
+#topbar {
+  display: flex; align-items: center; gap: 18px;
+  padding: 10px 18px; background: var(--panel);
+  border-bottom: 1px solid #2c4a36; font-weight: 700;
+}
+#holeInfo { color: var(--accent); font-size: 1.1rem; }
+#strokeInfo { color: var(--text); }
+#roomInfo {
+  margin-left: auto; color: var(--muted); cursor: pointer;
+  padding: 4px 12px; border-radius: 8px; background: var(--panel2);
+  transition: color .2s;
+}
+#roomInfo:hover { color: var(--accent); }
+
+#main { flex: 1; display: flex; min-height: 0; padding: 14px; gap: 14px; }
+
+#canvasWrap {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  position: relative; min-width: 0;
+}
+#canvas {
+  max-width: 100%; max-height: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 12px;
+  box-shadow: 0 12px 50px rgba(0,0,0,.55);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+#holeBanner {
+  position: absolute; top: 38%; left: 50%; transform: translate(-50%,-50%);
+  background: rgba(8, 25, 14, .88); border: 1px solid var(--accent);
+  padding: 18px 42px; border-radius: 14px; text-align: center;
+  font-size: 1.6rem; font-weight: 800; pointer-events: none;
+  animation: pop .35s ease;
+}
+#holeBanner small { display: block; font-size: .95rem; color: var(--muted); font-weight: 400; margin-top: 4px; }
+@keyframes pop { from { transform: translate(-50%,-50%) scale(.7); opacity: 0; } }
+
+/* ---------- SIDEBAR ---------- */
+#sidebar {
+  width: 280px; display: flex; flex-direction: column; gap: 14px; min-height: 0;
+}
+
+#scoreboard {
+  background: var(--panel); border: 1px solid #2c4a36; border-radius: 12px;
+  padding: 14px; max-height: 45%; overflow-y: auto;
+}
+#scoreboard h3 { font-size: .95rem; margin-bottom: 10px; color: var(--accent); }
+
+.score-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; border-radius: 8px; margin-bottom: 4px;
+  background: var(--panel2); font-size: .88rem;
+}
+.score-row .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.score-row .sname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.score-row .shole { color: var(--muted); font-size: .78rem; }
+.score-row .stotal { font-weight: 800; }
+.score-row.me { outline: 1px solid var(--accent); }
+
+#chatbox {
+  flex: 1; display: flex; flex-direction: column; min-height: 0;
+  background: var(--panel); border: 1px solid #2c4a36; border-radius: 12px;
+  padding: 10px;
+}
+#chatLog { flex: 1; overflow-y: auto; font-size: .85rem; line-height: 1.45; padding: 4px; }
+#chatLog .sys { color: var(--muted); font-style: italic; }
+#chatLog b { font-weight: 700; }
+
+#emotes { display: flex; gap: 4px; padding: 6px 0; }
+.emote {
+  flex: 1; background: var(--panel2); border: none; border-radius: 8px;
+  font-size: 1.05rem; padding: 4px 0; cursor: pointer; transition: transform .1s;
+}
+.emote:hover { transform: scale(1.2); }
+
+#chatForm { display: flex; gap: 6px; }
+#chatInput {
+  flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid #2c4a36;
+  background: var(--panel2); color: var(--text); outline: none;
+}
+#chatForm button {
+  padding: 0 16px; border: none; border-radius: 8px; cursor: pointer;
+  background: var(--accent); color: #08230f; font-weight: 800;
+}
+
+/* ---------- FINAL ---------- */
+#finalRanking { margin: 18px 0; text-align: left; }
+.final-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; border-radius: 10px; margin-bottom: 6px;
+  background: var(--panel2); font-size: 1rem;
+}
+.final-row .pos { font-weight: 800; width: 28px; }
+.final-row .dot { width: 12px; height: 12px; border-radius: 50%; }
+.final-row .fname { flex: 1; }
+.final-row .ftotal { font-weight: 800; color: var(--accent); }
+
+/* ---------- MÓVIL ---------- */
+@media (max-width: 860px) {
+  #main { flex-direction: column; padding: 8px; gap: 8px; }
+  #sidebar { width: 100%; flex-direction: row; height: 180px; }
+  #scoreboard { max-height: none; width: 45%; }
+  #chatbox { width: 55%; }
+}
