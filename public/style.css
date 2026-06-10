@@ -65,6 +65,50 @@ html, body {
 .hint { color: var(--muted); font-size: .8rem; margin-top: 18px; line-height: 1.5; }
 .error { color: #ff6b6b; margin-top: 10px; font-size: .9rem; min-height: 1.2em; }
 
+/* ---------- SALA DE ESPERA ---------- */
+.lobby-card.wide { width: min(520px, 94vw); }
+
+.lobby-card button.secondary {
+  background: var(--panel2); color: var(--accent);
+  border: 1px solid #2c4a36; font-size: .9rem; letter-spacing: 0;
+  padding: 10px; margin-bottom: 16px;
+}
+.lobby-card button.secondary:hover { box-shadow: none; border-color: var(--accent); }
+
+#wrPlayers {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-bottom: 20px; min-height: 40px;
+}
+.wr-player {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--panel2); border: 1px solid #2c4a36;
+  border-radius: 999px; padding: 7px 14px; font-size: .9rem;
+}
+.wr-player .dot { width: 11px; height: 11px; border-radius: 50%; }
+.wr-player .crown { font-size: .85rem; }
+
+.settings {
+  display: flex; flex-direction: column; gap: 10px;
+  text-align: left; margin-bottom: 18px;
+  background: var(--panel2); border-radius: 12px; padding: 16px;
+}
+.settings label {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; font-size: .92rem; color: var(--text);
+}
+.settings select {
+  background: var(--panel); color: var(--text);
+  border: 1px solid #2c4a36; border-radius: 8px; padding: 7px 10px;
+  font-size: .9rem; outline: none; min-width: 160px;
+}
+.settings label.check { justify-content: flex-start; cursor: pointer; }
+.settings input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); }
+.settings.locked select, .settings.locked input { pointer-events: none; opacity: .6; }
+
+#timerInfo { color: var(--text); font-variant-numeric: tabular-nums; }
+#timerInfo.urgent { color: #ff5252; animation: blink .5s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .45; } }
+
 /* ---------- JUEGO ---------- */
 #game { height: 100vh; display: flex; flex-direction: column; }
 

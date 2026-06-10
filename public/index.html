@@ -22,11 +22,42 @@
     </div>
   </div>
 
+  <!-- SALA DE ESPERA -->
+  <div id="waitRoom" class="overlay hidden">
+    <div class="lobby-card wide">
+      <h1>🏟️ Sala <span id="wrCode"></span></h1>
+      <p class="tagline">Esperando jugadores…</p>
+      <button id="wrCopy" class="secondary">🔗 Copiar enlace de invitación</button>
+      <div id="wrPlayers"></div>
+      <div class="settings">
+        <label>Mapa
+          <select id="setCourse"></select>
+        </label>
+        <label>Tiempo por hoyo
+          <select id="setTime">
+            <option value="30">30 segundos</option>
+            <option value="60" selected>60 segundos</option>
+            <option value="90">90 segundos</option>
+            <option value="120">2 minutos</option>
+            <option value="180">3 minutos</option>
+            <option value="0">Sin límite</option>
+          </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="setColl" checked /> Colisión entre bolas
+        </label>
+      </div>
+      <button id="startBtn">EMPEZAR PARTIDA</button>
+      <p id="wrHint" class="hint"></p>
+    </div>
+  </div>
+
   <!-- JUEGO -->
   <div id="game" class="hidden">
     <div id="topbar">
       <div id="holeInfo">Hoyo 1 · Par 2</div>
       <div id="strokeInfo">Golpes: 0</div>
+      <div id="timerInfo">⏱ —</div>
       <div id="roomInfo" title="Clic para copiar enlace de invitación">🔗 Sala: LOBBY</div>
     </div>
     <div id="main">
@@ -61,7 +92,8 @@
     <div class="lobby-card">
       <h1>🏁 ¡Partida terminada!</h1>
       <div id="finalRanking"></div>
-      <button onclick="location.reload()">JUGAR OTRA VEZ</button>
+      <button id="againBtn">JUGAR OTRA VEZ</button>
+      <p id="finalHint" class="hint"></p>
     </div>
   </div>
 
